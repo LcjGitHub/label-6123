@@ -43,7 +43,10 @@
           hoverable
         >
           <div class="category-card__header">
-            <div class="category-card__color-dot" :style="{ background: getCategoryColor(item.category) }" />
+            <div
+              class="category-card__color-dot"
+              :style="{ background: categoryColors[item.category] || '#999' }"
+            />
             <span class="category-card__name">{{ item.category }}</span>
           </div>
           <div class="category-card__total">{{ item.totalCount }} 种</div>
@@ -57,14 +60,6 @@
               <span class="category-card__detail-value">{{ item.japanCount }}</span>
             </div>
           </div>
-          <n-progress
-            :percentage="item.totalCount > 0 ? (item.chinaCount / item.totalCount) * 100 : 0"
-            :stroke-width="6"
-            :show-indicator="false"
-            color="#C91F37"
-            rail-color="#E8E8E8"
-            class="category-card__progress"
-          />
         </n-card>
       </div>
     </div>
@@ -73,29 +68,14 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { NCard, NText, NProgress } from 'naive-ui'
+import { NCard, NText } from 'naive-ui'
 import { useColors } from '@/composables/useColors'
-import { computeColorStats } from '@/utils/statsUtils'
+import { computeColorStats, getCategoryRepresentativeColors } from '@/utils/statsUtils'
 
 const { allColors } = useColors()
 
 const stats = computed(() => computeColorStats(allColors.value))
-
-const categoryColorMap: Record<string, string> = {
-  '红系': '#C91F37',
-  '橙系': '#FA7E23',
-  '黄系': '#F2BE45',
-  '绿系': '#2BA471',
-  '蓝系': '#2B66A4',
-  '紫系': '#8B439D',
-  '白系': '#F5F5F5',
-  '黑灰系': '#333333',
-  '褐系': '#8B4513',
-}
-
-function getCategoryColor(category: string): string {
-  return categoryColorMap[category] || '#999'
-}
+const categoryColors = computed(() => getCategoryRepresentativeColors(allColors.value))
 </script>
 
 <style scoped>
@@ -208,7 +188,8 @@ function getCategoryColor(category: string): string {
   height: 16px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #eee;
+  border: 1.5px solid #ddd;
+  box-shadow: 0 0 0 2px #fff;
 }
 
 .category-card__name {
@@ -227,7 +208,6 @@ function getCategoryColor(category: string): string {
 .category-card__detail {
   display: flex;
   gap: 16px;
-  margin-bottom: 12px;
 }
 
 .category-card__detail-item {
@@ -245,10 +225,6 @@ function getCategoryColor(category: string): string {
   font-size: 18px;
   font-weight: 600;
   color: #666;
-}
-
-.category-card__progress {
-  margin-top: 4px;
 }
 
 @media (max-width: 640px) {
