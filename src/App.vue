@@ -72,6 +72,7 @@ body {
   padding: 0 24px;
   height: 56px;
   background: #fff;
+  min-width: 0;
 }
 
 .app-title {
@@ -82,6 +83,7 @@ body {
   font-weight: 600;
   color: #333;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .app-title:hover {
@@ -90,10 +92,12 @@ body {
 
 .app-subtitle {
   font-size: 13px;
+  flex-shrink: 0;
 }
 
 .app-header__spacer {
   flex: 1;
+  min-width: 8px;
 }
 
 .app-favorites {
@@ -106,6 +110,8 @@ body {
   padding: 4px 8px;
   border-radius: 6px;
   transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .app-favorites:hover {
@@ -124,6 +130,8 @@ body {
   border-radius: 6px;
   transition: background 0.2s, color 0.2s;
   margin-right: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .app-nav-link:hover {
@@ -135,5 +143,43 @@ body {
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .app-subtitle {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .app-title span {
+    display: none;
+  }
+
+  .app-nav-link span {
+    display: none;
+  }
+
+  .app-favorites span {
+    display: none;
+  }
+
+  .app-nav-link {
+    margin-right: 0;
+  }
+
+  .app-content {
+    padding: 16px;
+  }
 }
 </style>
