@@ -28,8 +28,8 @@
     </div>
 
     <n-card title="色值信息" class="color-detail__card">
-      <n-descriptions :column="2" label-placement="left" bordered>
-        <n-descriptions-item label="HEX">
+      <n-descriptions :column="3" label-placement="left" bordered>
+        <n-descriptions-item label="十六进制">
           <div class="color-detail__copy-item">
             <n-text code>{{ color.hex }}</n-text>
             <n-button size="small" text @click="handleCopyHex">
@@ -40,7 +40,7 @@
             </n-button>
           </div>
         </n-descriptions-item>
-        <n-descriptions-item label="RGB">
+        <n-descriptions-item label="红绿蓝" :span="2">
           <div class="color-detail__copy-item">
             <n-text code>{{ formatRgb(color.rgb) }}</n-text>
             <n-button size="small" text @click="handleCopyRgb">
@@ -51,10 +51,10 @@
             </n-button>
           </div>
         </n-descriptions-item>
-        <n-descriptions-item label="HSV">
+        <n-descriptions-item label="色相饱和度亮度" :span="3">
           <div class="color-detail__copy-item">
-            <n-text code>{{ formatHsv(colorHsv) }}</n-text>
-            <n-button size="small" text @click="handleCopyHsv">
+            <n-text code>{{ formatHsl(colorHsl) }}</n-text>
+            <n-button size="small" text @click="handleCopyHsl">
               <template #icon>
                 <n-icon :component="CopyOutline" />
               </template>
@@ -65,9 +65,9 @@
         <n-descriptions-item label="R">{{ color.rgb.r }}</n-descriptions-item>
         <n-descriptions-item label="G">{{ color.rgb.g }}</n-descriptions-item>
         <n-descriptions-item label="B">{{ color.rgb.b }}</n-descriptions-item>
-        <n-descriptions-item label="H">{{ colorHsv.h }}°</n-descriptions-item>
-        <n-descriptions-item label="S">{{ colorHsv.s }}%</n-descriptions-item>
-        <n-descriptions-item label="V">{{ colorHsv.v }}%</n-descriptions-item>
+        <n-descriptions-item label="色相">{{ colorHsl.h }}°</n-descriptions-item>
+        <n-descriptions-item label="饱和度">{{ colorHsl.s }}%</n-descriptions-item>
+        <n-descriptions-item label="亮度">{{ colorHsl.l }}%</n-descriptions-item>
       </n-descriptions>
     </n-card>
 
@@ -157,7 +157,7 @@ import {
 } from 'naive-ui'
 import { ArrowBackOutline, AlertCircleOutline, CopyOutline } from '@vicons/ionicons5'
 import { useColors } from '@/composables/useColors'
-import { findSimilarColors, formatRgb, formatHsv, rgbToHsv, isLightColor, type Hsv } from '@/utils/colorUtils'
+import { findSimilarColors, formatRgb, formatHsl, rgbToHsl, isLightColor, type Hsl } from '@/utils/colorUtils'
 import { copyText } from '@/utils/copyUtils'
 import FavoriteButton from '@/components/FavoriteButton.vue'
 
@@ -175,8 +175,8 @@ const isLight = computed(() =>
   color.value ? isLightColor(color.value.hex) : false
 )
 
-const colorHsv = computed<Hsv>(() =>
-  color.value ? rgbToHsv(color.value.rgb) : { h: 0, s: 0, v: 0 }
+const colorHsl = computed<Hsl>(() =>
+  color.value ? rgbToHsl(color.value.rgb) : { h: 0, s: 0, l: 0 }
 )
 
 const similarColors = computed(() => {
@@ -218,12 +218,12 @@ function handleCopyRgb() {
 /**
  * 复制色相饱和度亮度值到剪贴板
  *
- * 将当前颜色的 HSV 色值（如 hsv(0, 100%, 100%)）写入剪贴板，
+ * 将当前颜色的 HSL 色值（如 hsl(0, 100%, 50%)）写入剪贴板，
  * 成功后弹出「色相饱和度亮度值已复制到剪贴板」提示。
  */
-function handleCopyHsv() {
+function handleCopyHsl() {
   if (color.value) {
-    copyText(formatHsv(colorHsv.value), '色相饱和度亮度值', message)
+    copyText(formatHsl(colorHsl.value), '色相饱和度亮度值', message)
   }
 }
 </script>
