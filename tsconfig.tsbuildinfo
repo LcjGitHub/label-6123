@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/composables/usecolors.ts","./src/router/index.ts","./src/types/color.ts","./src/utils/colorutils.ts","./src/app.vue","./src/components/categoryfilter.vue","./src/components/colorcard.vue","./src/components/colorsearch.vue","./src/views/colordetail.vue","./src/views/colorlist.vue"],"errors":true,"version":"5.7.3"}
