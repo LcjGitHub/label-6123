@@ -61,21 +61,46 @@
       <n-text>{{ color.story }}</n-text>
     </n-card>
 
-    <n-card title="相近色（RGB 距离 Top 5）" class="color-detail__card">
+    <n-card class="color-detail__card">
+      <template #header>
+        <div class="color-detail__similar-header">
+          <span>相近色（RGB 距离 Top {{ similarCount }}）</span>
+          <n-input-number
+            v-model:value="similarCount"
+            :min="3"
+            :max="10"
+            size="small"
+            style="width: 120px"
+          />
+        </div>
+      </template>
       <div class="color-detail__similar">
         <router-link
-          v-for="similar in similarColors"
-          :key="similar.id"
-          :to="`/color/${similar.id}`"
+          v-for="item in similarColors"
+          :key="item.color.id"
+          :to="`/color/${item.color.id}`"
           class="color-detail__similar-item"
         >
           <div
             class="color-detail__similar-swatch"
-            :style="{ backgroundColor: similar.hex }"
+            :style="{ backgroundColor: item.color.hex }"
           />
           <div class="color-detail__similar-info">
-            <span class="color-detail__similar-name">{{ similar.name }}</span>
-            <span class="color-detail__similar-hex">{{ similar.hex }}</span>
+            <div class="color-detail__similar-main">
+              <span class="color-detail__similar-name">{{ item.color.name }}</span>
+              <span class="color-detail__similar-hex">{{ item.color.hex }}</span>
+            </div>
+            <div class="color-detail__similar-distances">
+              <span class="color-detail__distance color-detail__distance--r">
+                ΔR {{ item.rDistance.toFixed(2) }}
+              </span>
+              <span class="color-detail__distance color-detail__distance--g">
+                ΔG {{ item.gDistance.toFixed(2) }}
+              </span>
+              <span class="color-detail__distance color-detail__distance--b">
+                ΔB {{ item.bDistance.toFixed(2) }}
+              </span>
+            </div>
           </div>
         </router-link>
       </div>
@@ -97,7 +122,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   NButton,
@@ -109,6 +134,7 @@ import {
   NDescriptionsItem,
   NText,
   NEmpty,
+  NInputNumber,
   useMessage,
 } from 'naive-ui'
 import { ArrowBackOutline, AlertCircleOutline, CopyOutline } from '@vicons/ionicons5'
@@ -125,13 +151,15 @@ const { getColorById, allColors } = useColors()
 const colorId = computed(() => route.params.id as string)
 const color = computed(() => getColorById(colorId.value))
 
+const similarCount = ref(5)
+
 const isLight = computed(() =>
   color.value ? isLightColor(color.value.hex) : false
 )
 
 const similarColors = computed(() => {
   if (!color.value) return []
-  return findSimilarColors(color.value, allColors.value, 5)
+  return findSimilarColors(color.value, allColors.value, similarCount.value)
 })
 
 /**
@@ -210,6 +238,13 @@ function handleCopyRgb() {
   gap: 8px;
 }
 
+.color-detail__similar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .color-detail__similar {
   display: flex;
   flex-direction: column;
@@ -242,6 +277,14 @@ function handleCopyRgb() {
 .color-detail__similar-info {
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.color-detail__similar-main {
+  display: flex;
+  flex-direction: column;
   gap: 2px;
 }
 
@@ -254,6 +297,36 @@ function handleCopyRgb() {
   font-size: 12px;
   font-family: monospace;
   color: #999;
+}
+
+.color-detail__similar-distances {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.color-detail__distance {
+  font-size: 11px;
+  font-family: monospace;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #f0f0f0;
+  color: #666;
+}
+
+.color-detail__distance--r {
+  background: #fef0f0;
+  color: #e74c3c;
+}
+
+.color-detail__distance--g {
+  background: #f0f9f0;
+  color: #27ae60;
+}
+
+.color-detail__distance--b {
+  background: #f0f4fe;
+  color: #3498db;
 }
 
 .color-detail__not-found {

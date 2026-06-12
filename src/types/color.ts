@@ -18,6 +18,22 @@ export interface ColorItem {
   story: string
 }
 
+/**
+ * 带距离信息的相似颜色
+ */
+export interface SimilarColorItem {
+  /** 颜色信息 */
+  color: ColorItem
+  /** RGB 欧氏距离 */
+  distance: number
+  /** 红色通道距离 */
+  rDistance: number
+  /** 绿色通道距离 */
+  gDistance: number
+  /** 蓝色通道距离 */
+  bDistance: number
+}
+
 /** 色系选项 */
 export const COLOR_CATEGORIES = [
   '全部',

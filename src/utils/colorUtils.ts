@@ -1,4 +1,4 @@
-import type { ColorItem } from '@/types/color'
+import type { ColorItem, SimilarColorItem } from '@/types/color'
 
 /**
  * 计算两个 RGB 颜色的欧氏距离
@@ -19,13 +19,18 @@ export function findSimilarColors(
   target: ColorItem,
   allColors: ColorItem[],
   limit = 5
-): ColorItem[] {
+): SimilarColorItem[] {
   return allColors
     .filter((c) => c.id !== target.id)
-    .map((c) => ({ color: c, distance: rgbDistance(target.rgb, c.rgb) }))
+    .map((c) => ({
+      color: c,
+      distance: rgbDistance(target.rgb, c.rgb),
+      rDistance: Math.abs(target.rgb.r - c.rgb.r),
+      gDistance: Math.abs(target.rgb.g - c.rgb.g),
+      bDistance: Math.abs(target.rgb.b - c.rgb.b),
+    }))
     .sort((a, b) => a.distance - b.distance)
     .slice(0, limit)
-    .map((item) => item.color)
 }
 
 /**
