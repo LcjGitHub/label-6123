@@ -64,14 +64,18 @@
     <n-card class="color-detail__card">
       <template #header>
         <div class="color-detail__similar-header">
-          <span>相近色（RGB 距离 Top {{ similarCount }}）</span>
-          <n-input-number
-            v-model:value="similarCount"
-            :min="3"
-            :max="10"
-            size="small"
-            style="width: 120px"
-          />
+          <span>相近色（红绿蓝距离前 {{ similarCount }} 个）</span>
+          <div class="color-detail__similar-count-control">
+            <span class="color-detail__similar-count-label">显示数量</span>
+            <n-input-number
+              v-model:value="similarCount"
+              :min="3"
+              :max="10"
+              size="small"
+              placeholder=""
+              style="width: 100px"
+            />
+          </div>
         </div>
       </template>
       <div class="color-detail__similar">
@@ -92,13 +96,13 @@
             </div>
             <div class="color-detail__similar-distances">
               <span class="color-detail__distance color-detail__distance--r">
-                ΔR {{ item.rDistance.toFixed(2) }}
+                红距离 {{ item.rDistance.toFixed(2) }}
               </span>
               <span class="color-detail__distance color-detail__distance--g">
-                ΔG {{ item.gDistance.toFixed(2) }}
+                绿距离 {{ item.gDistance.toFixed(2) }}
               </span>
               <span class="color-detail__distance color-detail__distance--b">
-                ΔB {{ item.bDistance.toFixed(2) }}
+                蓝距离 {{ item.bDistance.toFixed(2) }}
               </span>
             </div>
           </div>
@@ -243,6 +247,17 @@ function handleCopyRgb() {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+
+.color-detail__similar-count-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-detail__similar-count-label {
+  font-size: 13px;
+  color: #666;
 }
 
 .color-detail__similar {
