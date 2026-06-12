@@ -9,12 +9,15 @@
 
     <div class="color-detail__hero" :style="{ backgroundColor: color.hex }">
       <div class="color-detail__hero-content">
-        <h1
-          class="color-detail__title"
-          :class="{ 'color-detail__title--light': isLight }"
-        >
-          {{ color.name }}
-        </h1>
+        <div class="color-detail__hero-header">
+          <h1
+            class="color-detail__title"
+            :class="{ 'color-detail__title--light': isLight }"
+          >
+            {{ color.name }}
+          </h1>
+          <FavoriteButton :color-id="color.id" :size="24" />
+        </div>
         <n-space>
           <n-tag :bordered="false">{{ color.category }}</n-tag>
           <n-tag :bordered="false" :type="color.origin === 'china' ? 'error' : 'info'">
@@ -94,6 +97,7 @@ import {
 import { ArrowBackOutline, AlertCircleOutline } from '@vicons/ionicons5'
 import { useColors } from '@/composables/useColors'
 import { findSimilarColors, formatRgb, isLightColor } from '@/utils/colorUtils'
+import FavoriteButton from '@/components/FavoriteButton.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -133,12 +137,19 @@ function goBack() {
   align-items: flex-end;
 }
 
+.color-detail__hero-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
 .color-detail__title {
   font-size: 32px;
   font-weight: 700;
   color: #fff;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin-bottom: 12px;
+  margin: 0;
 }
 
 .color-detail__title--light {

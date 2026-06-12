@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('@/views/ColorList.vue'),
     },
     {
+      path: '/favorites',
+      name: 'favorites',
+      component: () => import('@/views/Favorites.vue'),
+    },
+    {
       path: '/color/:id',
       name: 'detail',
       component: () => import('@/views/ColorDetail.vue'),
