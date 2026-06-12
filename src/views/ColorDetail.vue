@@ -30,10 +30,26 @@
     <n-card title="色值信息" class="color-detail__card">
       <n-descriptions :column="2" label-placement="left" bordered>
         <n-descriptions-item label="HEX">
-          <n-text code>{{ color.hex }}</n-text>
+          <div class="color-detail__copy-item">
+            <n-text code>{{ color.hex }}</n-text>
+            <n-button size="small" text @click="handleCopyHex">
+              <template #icon>
+                <n-icon :component="CopyOutline" />
+              </template>
+              复制
+            </n-button>
+          </div>
         </n-descriptions-item>
         <n-descriptions-item label="RGB">
-          <n-text code>{{ formatRgb(color.rgb) }}</n-text>
+          <div class="color-detail__copy-item">
+            <n-text code>{{ formatRgb(color.rgb) }}</n-text>
+            <n-button size="small" text @click="handleCopyRgb">
+              <template #icon>
+                <n-icon :component="CopyOutline" />
+              </template>
+              复制
+            </n-button>
+          </div>
         </n-descriptions-item>
         <n-descriptions-item label="R">{{ color.rgb.r }}</n-descriptions-item>
         <n-descriptions-item label="G">{{ color.rgb.g }}</n-descriptions-item>
@@ -94,9 +110,10 @@ import {
   NText,
   NEmpty,
 } from 'naive-ui'
-import { ArrowBackOutline, AlertCircleOutline } from '@vicons/ionicons5'
+import { ArrowBackOutline, AlertCircleOutline, CopyOutline } from '@vicons/ionicons5'
 import { useColors } from '@/composables/useColors'
 import { findSimilarColors, formatRgb, isLightColor } from '@/utils/colorUtils'
+import { copyText } from '@/utils/copyUtils'
 import FavoriteButton from '@/components/FavoriteButton.vue'
 
 const route = useRoute()
@@ -120,6 +137,18 @@ const similarColors = computed(() => {
  */
 function goBack() {
   router.push('/')
+}
+
+function handleCopyHex() {
+  if (color.value) {
+    copyText(color.value.hex, 'HEX色值')
+  }
+}
+
+function handleCopyRgb() {
+  if (color.value) {
+    copyText(formatRgb(color.value.rgb), 'RGB色值')
+  }
 }
 </script>
 
@@ -159,6 +188,12 @@ function goBack() {
 
 .color-detail__card {
   margin-bottom: 16px;
+}
+
+.color-detail__copy-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .color-detail__similar {

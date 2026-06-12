@@ -3,8 +3,14 @@
     <div class="color-list__toolbar">
       <ColorSearch v-model="keyword" />
       <div class="color-list__filters">
-        <CategoryFilter v-model="category" class="color-list__filter" />
-        <SourceFilter v-model="origin" class="color-list__filter" />
+        <div class="color-list__filter-group">
+          <span class="color-list__filter-label">色系</span>
+          <CategoryFilter v-model="category" />
+        </div>
+        <div class="color-list__filter-group">
+          <span class="color-list__filter-label">来源</span>
+          <SourceFilter v-model="origin" />
+        </div>
       </div>
     </div>
 
@@ -76,14 +82,36 @@ function resetFilters() {
 
 .color-list__filters {
   display: flex;
-  align-items: flex-start;
-  gap: 24px;
+  align-items: center;
+  gap: 32px;
   margin-top: 16px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
 }
 
-.color-list__filter {
+.color-list__filters::-webkit-scrollbar {
+  height: 4px;
+}
+
+.color-list__filters::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 2px;
+}
+
+.color-list__filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex-shrink: 0;
+}
+
+.color-list__filter-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
 }
 
 .color-list__grid {
