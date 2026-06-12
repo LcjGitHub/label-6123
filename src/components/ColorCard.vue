@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="`/color/${color.id}`"
+    :to="{ path: `/color/${color.id}`, state: { fromList: true } }"
     class="color-card"
     aria-label="查看颜色详情"
   >

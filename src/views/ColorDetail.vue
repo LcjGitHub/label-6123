@@ -96,7 +96,7 @@
         <router-link
           v-for="item in similarColors"
           :key="item.color.id"
-          :to="`/color/${item.color.id}`"
+          :to="{ path: `/color/${item.color.id}`, state: { fromList: hasFromList } }"
           class="color-detail__similar-item"
         >
           <div
@@ -168,6 +168,7 @@ const { getColorById, allColors } = useColors()
 
 const colorId = computed(() => route.params.id as string)
 const color = computed(() => getColorById(colorId.value))
+const hasFromList = computed(() => window.history.state?.fromList === true)
 
 const similarCount = ref(5)
 
@@ -186,9 +187,14 @@ const similarColors = computed(() => {
 
 /**
  * 返回列表页
+ * 优先使用历史后退回到带筛选的列表；若无可用历史则跳转到无筛选的首页
  */
 function goBack() {
-  router.push('/')
+  if (window.history.state?.fromList === true) {
+    router.back()
+  } else {
+    router.push('/')
+  }
 }
 
 /**

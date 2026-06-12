@@ -60,19 +60,23 @@ import CategoryFilter from '@/components/CategoryFilter.vue'
 import SourceFilter from '@/components/SourceFilter.vue'
 import SortSelector from '@/components/SortSelector.vue'
 import { useColors } from '@/composables/useColors'
-import type { ColorOrigin, SortOption } from '@/types/color'
+import { COLOR_CATEGORIES, COLOR_ORIGINS, SORT_OPTIONS, type ColorOrigin, type SortOption } from '@/types/color'
 
 const { searchColors, filterByCategory, filterByOrigin, sortColors } = useColors()
 const route = useRoute()
 const router = useRouter()
 
+const VALID_CATEGORIES = COLOR_CATEGORIES as readonly string[]
+const VALID_ORIGINS = COLOR_ORIGINS.map(o => o.value)
+const VALID_SORT_OPTIONS = SORT_OPTIONS.map(s => s.value)
+
 const DEFAULT_KEYWORD = ''
-const DEFAULT_CATEGORY = '全部'
+const DEFAULT_CATEGORY: typeof COLOR_CATEGORIES[number] = '全部'
 const DEFAULT_ORIGIN: ColorOrigin = 'all'
 const DEFAULT_SORT_BY: SortOption = 'name'
 
 const keyword = ref(DEFAULT_KEYWORD)
-const category = ref(DEFAULT_CATEGORY)
+const category = ref<typeof COLOR_CATEGORIES[number]>(DEFAULT_CATEGORY)
 const origin = ref<ColorOrigin>(DEFAULT_ORIGIN)
 const sortBy = ref<SortOption>(DEFAULT_SORT_BY)
 
@@ -83,13 +87,17 @@ function restoreFromQuery() {
   try {
     const q = route.query
     keyword.value = typeof q.keyword === 'string' ? q.keyword : DEFAULT_KEYWORD
-    category.value = typeof q.category === 'string' && q.category ? q.category : DEFAULT_CATEGORY
-    if (typeof q.origin === 'string' && (q.origin === 'all' || q.origin === 'china' || q.origin === 'japan')) {
+    if (typeof q.category === 'string' && VALID_CATEGORIES.includes(q.category)) {
+      category.value = q.category as typeof COLOR_CATEGORIES[number]
+    } else {
+      category.value = DEFAULT_CATEGORY
+    }
+    if (typeof q.origin === 'string' && (VALID_ORIGINS as string[]).includes(q.origin)) {
       origin.value = q.origin as ColorOrigin
     } else {
       origin.value = DEFAULT_ORIGIN
     }
-    if (typeof q.sortBy === 'string' && (q.sortBy === 'name' || q.sortBy === 'category' || q.sortBy === 'brightness')) {
+    if (typeof q.sortBy === 'string' && (VALID_SORT_OPTIONS as string[]).includes(q.sortBy)) {
       sortBy.value = q.sortBy as SortOption
     } else {
       sortBy.value = DEFAULT_SORT_BY

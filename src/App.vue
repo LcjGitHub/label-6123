@@ -3,10 +3,10 @@
     <n-message-provider>
       <n-layout class="app-layout">
         <n-layout-header bordered class="app-header">
-          <router-link to="/" class="app-title">
+          <span class="app-title" role="link" tabindex="0" @click="handleTitleClick" @keydown.enter="handleTitleClick">
             <n-icon :component="ColorPaletteOutline" size="24" />
             <span>传统色名浏览器</span>
-          </router-link>
+          </span>
           <n-text depth="3" class="app-subtitle">中国色 · 日本色</n-text>
           <div class="app-header__spacer" />
           <router-link to="/discover" class="app-nav-link" aria-label="随机发现">
@@ -40,9 +40,20 @@
 <script setup lang="ts">
 import { NConfigProvider, NMessageProvider, NLayout, NLayoutHeader, NLayoutContent, NIcon, NText, NBadge } from 'naive-ui'
 import { ColorPaletteOutline, HeartOutline, ShuffleOutline, BarChartOutline } from '@vicons/ionicons5'
+import { useRoute, useRouter } from 'vue-router'
 import { useFavorites } from '@/composables/useFavorites'
 
+const route = useRoute()
+const router = useRouter()
 const { favoriteCount } = useFavorites()
+
+function handleTitleClick() {
+  if (route.name === 'detail' && window.history.state?.fromList === true) {
+    router.back()
+  } else {
+    router.push('/')
+  }
+}
 
 const themeOverrides = {
   common: {
