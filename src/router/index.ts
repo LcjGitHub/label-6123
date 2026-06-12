@@ -14,6 +14,11 @@ const router = createRouter({
       component: () => import('@/views/Favorites.vue'),
     },
     {
+      path: '/discover',
+      name: 'discover',
+      component: () => import('@/views/RandomDiscover.vue'),
+    },
+    {
       path: '/color/:id',
       name: 'detail',
       component: () => import('@/views/ColorDetail.vue'),

@@ -9,6 +9,10 @@
           </router-link>
           <n-text depth="3" class="app-subtitle">中国色 · 日本色</n-text>
           <div class="app-header__spacer" />
+          <router-link to="/discover" class="app-nav-link" aria-label="随机发现">
+            <n-icon :component="ShuffleOutline" size="20" />
+            <span>随机发现</span>
+          </router-link>
           <n-badge
             class="app-favorites-badge"
             :value="favoriteCount"
@@ -31,7 +35,7 @@
 
 <script setup lang="ts">
 import { NConfigProvider, NMessageProvider, NLayout, NLayoutHeader, NLayoutContent, NIcon, NText, NBadge } from 'naive-ui'
-import { ColorPaletteOutline, HeartOutline } from '@vicons/ionicons5'
+import { ColorPaletteOutline, HeartOutline, ShuffleOutline } from '@vicons/ionicons5'
 import { useFavorites } from '@/composables/useFavorites'
 
 const { favoriteCount } = useFavorites()
@@ -105,6 +109,24 @@ body {
 }
 
 .app-favorites:hover {
+  background: #f5f5f5;
+  color: #8B4513;
+}
+
+.app-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  margin-right: 8px;
+}
+
+.app-nav-link:hover {
   background: #f5f5f5;
   color: #8B4513;
 }
