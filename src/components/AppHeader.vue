@@ -10,6 +10,10 @@
       <n-icon :component="ShuffleOutline" size="20" />
       <span>随机发现</span>
     </router-link>
+    <router-link to="/compare" class="app-nav-link" aria-label="双色调对比">
+      <n-icon :component="ContrastOutline" size="20" />
+      <span>双色对比</span>
+    </router-link>
     <router-link to="/stats" class="app-nav-link" aria-label="统计概览">
       <n-icon :component="BarChartOutline" size="20" />
       <span>统计概览</span>
@@ -41,7 +45,7 @@
 
 <script setup lang="ts">
 import { NLayoutHeader, NIcon, NText, NBadge } from 'naive-ui'
-import { ColorPaletteOutline, HeartOutline, ShuffleOutline, BarChartOutline, TimeOutline } from '@vicons/ionicons5'
+import { ColorPaletteOutline, HeartOutline, ShuffleOutline, BarChartOutline, TimeOutline, ContrastOutline } from '@vicons/ionicons5'
 import { useRoute, useRouter } from 'vue-router'
 import { useFavorites } from '@/composables/useFavorites'
 import { useBrowseHistory } from '@/composables/useBrowseHistory'

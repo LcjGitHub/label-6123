@@ -38,6 +38,11 @@ const router = createRouter({
       name: 'history',
       component: () => import('@/views/BrowseHistory.vue'),
     },
+    {
+      path: '/compare',
+      name: 'compare',
+      component: () => import('@/views/ColorCompare.vue'),
+    },
   ],
 })
 
