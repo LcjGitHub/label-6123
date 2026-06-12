@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 执行类型检查
+        id: typecheck
+        run: npx vue-tsc --noEmit -p tsconfig.app.json
+        continue-on-error: true
+
+      - name: 类型检查错误摘要
+        if: steps.typecheck.outcome == 'failure'
+        run: |
+          echo "========================================"
+          echo "❌ 类型检查失败！"
+          echo "========================================"
+          echo "请修复以下 TypeScript 类型错误后再提交："
+          echo ""
+          npx vue-tsc --noEmit -p tsconfig.app.json 2>&1 | head -100
+          echo ""
+          echo "========================================"
+          echo "💡 提示：请在本地运行 'npm run build' 验证类型检查通过后再推送代码。"
+          echo "========================================"
+          exit 1
+
+      - name: 执行生产构建
+        id: build
+        run: npx vite build
+        continue-on-error: true
+
+      - name: 构建错误摘要
+        if: steps.build.outcome == 'failure'
+        run: |
+          echo "========================================"
+          echo "❌ 生产构建失败！"
+          echo "========================================"
+          echo "请修复以下构建错误后再提交："
+          echo ""
+          npx vite build 2>&1 | tail -50
+          echo ""
+          echo "========================================"
+          echo "💡 提示：请在本地运行 'npm run build' 验证构建通过后再推送代码。"
+          echo "========================================"
+          exit 1
+
+      - name: 构建成功
+        if: success()
+        run: |
+          echo "========================================"
+          echo "✅ 类型检查与生产构建均已通过！"
+          echo "========================================"
