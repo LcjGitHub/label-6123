@@ -32,4 +32,13 @@ export const COLOR_CATEGORIES = [
   '褐系',
 ] as const
 
+/** 来源选项 */
+export const COLOR_ORIGINS = [
+  { label: '全部', value: 'all' },
+  { label: '中国色', value: 'china' },
+  { label: '日本色', value: 'japan' },
+] as const
+
+export type ColorOrigin = (typeof COLOR_ORIGINS)[number]['value']
+
 export type ColorCategory = (typeof COLOR_CATEGORIES)[number]

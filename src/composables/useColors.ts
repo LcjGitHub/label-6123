@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import Fuse from 'fuse.js'
 import colorsData from '@/mock/colors.json'
-import type { ColorItem } from '@/types/color'
+import type { ColorItem, ColorOrigin } from '@/types/color'
 
 const allColors = ref<ColorItem[]>(colorsData as ColorItem[])
 
@@ -40,10 +40,16 @@ export function useColors() {
     return colors.filter((c) => c.category === category)
   }
 
+  function filterByOrigin(colors: ColorItem[], origin: ColorOrigin): ColorItem[] {
+    if (origin === 'all') return colors
+    return colors.filter((c) => c.origin === origin)
+  }
+
   return {
     allColors: computed(() => allColors.value),
     getColorById,
     searchColors,
     filterByCategory,
+    filterByOrigin,
   }
 }

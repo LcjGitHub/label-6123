@@ -2,7 +2,10 @@
   <div class="color-list">
     <div class="color-list__toolbar">
       <ColorSearch v-model="keyword" />
-      <CategoryFilter v-model="category" class="color-list__filter" />
+      <div class="color-list__filters">
+        <CategoryFilter v-model="category" class="color-list__filter" />
+        <SourceFilter v-model="origin" class="color-list__filter" />
+      </div>
     </div>
 
     <n-spin :show="false">
@@ -40,16 +43,20 @@ import { ColorPaletteOutline } from '@vicons/ionicons5'
 import ColorCard from '@/components/ColorCard.vue'
 import ColorSearch from '@/components/ColorSearch.vue'
 import CategoryFilter from '@/components/CategoryFilter.vue'
+import SourceFilter from '@/components/SourceFilter.vue'
 import { useColors } from '@/composables/useColors'
+import type { ColorOrigin } from '@/types/color'
 
-const { searchColors, filterByCategory } = useColors()
+const { searchColors, filterByCategory, filterByOrigin } = useColors()
 
 const keyword = ref('')
 const category = ref('全部')
+const origin = ref<ColorOrigin>('all')
 
 const filteredColors = computed(() => {
   const searched = searchColors(keyword.value)
-  return filterByCategory(searched, category.value)
+  const byCategory = filterByCategory(searched, category.value)
+  return filterByOrigin(byCategory, origin.value)
 })
 
 /**
@@ -58,6 +65,7 @@ const filteredColors = computed(() => {
 function resetFilters() {
   keyword.value = ''
   category.value = '全部'
+  origin.value = 'all'
 }
 </script>
 
@@ -66,8 +74,16 @@ function resetFilters() {
   margin-bottom: 24px;
 }
 
-.color-list__filter {
+.color-list__filters {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
   margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.color-list__filter {
+  flex-shrink: 0;
 }
 
 .color-list__grid {
