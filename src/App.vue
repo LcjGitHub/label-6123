@@ -1,6 +1,6 @@
 <template>
   <n-config-provider :theme-overrides="themeOverrides">
-    <n-message-provider ref="messageProviderRef">
+    <n-message-provider>
       <n-layout class="app-layout">
         <n-layout-header bordered class="app-header">
           <router-link to="/" class="app-title">
@@ -30,20 +30,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { NConfigProvider, NMessageProvider, NLayout, NLayoutHeader, NLayoutContent, NIcon, NText, NBadge, useMessage } from 'naive-ui'
+import { NConfigProvider, NMessageProvider, NLayout, NLayoutHeader, NLayoutContent, NIcon, NText, NBadge } from 'naive-ui'
 import { ColorPaletteOutline, HeartOutline } from '@vicons/ionicons5'
 import { useFavorites } from '@/composables/useFavorites'
-import { setMessageInstance } from '@/utils/copyUtils'
 
 const { favoriteCount } = useFavorites()
-
-const messageProviderRef = ref()
-const message = useMessage()
-
-onMounted(() => {
-  setMessageInstance(message)
-})
 
 const themeOverrides = {
   common: {

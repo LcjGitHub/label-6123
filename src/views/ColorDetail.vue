@@ -109,6 +109,7 @@ import {
   NDescriptionsItem,
   NText,
   NEmpty,
+  useMessage,
 } from 'naive-ui'
 import { ArrowBackOutline, AlertCircleOutline, CopyOutline } from '@vicons/ionicons5'
 import { useColors } from '@/composables/useColors'
@@ -118,6 +119,7 @@ import FavoriteButton from '@/components/FavoriteButton.vue'
 
 const route = useRoute()
 const router = useRouter()
+const message = useMessage()
 const { getColorById, allColors } = useColors()
 
 const colorId = computed(() => route.params.id as string)
@@ -139,15 +141,27 @@ function goBack() {
   router.push('/')
 }
 
+/**
+ * 复制十六进制色值到剪贴板
+ *
+ * 将当前颜色的 HEX 色值（如 #FF0000）写入剪贴板，
+ * 成功后弹出「十六进制色值已复制到剪贴板」提示。
+ */
 function handleCopyHex() {
   if (color.value) {
-    copyText(color.value.hex, 'HEX色值')
+    copyText(color.value.hex, '十六进制色值', message)
   }
 }
 
+/**
+ * 复制红绿蓝色值到剪贴板
+ *
+ * 将当前颜色的 RGB 色值（如 rgb(255, 0, 0)）写入剪贴板，
+ * 成功后弹出「红绿蓝色值已复制到剪贴板」提示。
+ */
 function handleCopyRgb() {
   if (color.value) {
-    copyText(formatRgb(color.value.rgb), 'RGB色值')
+    copyText(formatRgb(color.value.rgb), '红绿蓝色值', message)
   }
 }
 </script>
