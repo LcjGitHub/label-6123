@@ -67,3 +67,8 @@ export const SORT_OPTIONS = [
 ] as const
 
 export type SortOption = (typeof SORT_OPTIONS)[number]['value']
+
+export interface BrowseHistoryItem {
+  colorId: string
+  viewedAt: number
+}

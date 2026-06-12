@@ -25,18 +25,31 @@
         <span>收藏夹</span>
       </router-link>
     </n-badge>
+    <n-badge
+      class="app-history-badge"
+      :value="unreadCount"
+      :max="99"
+      :hidden="unreadCount === 0"
+    >
+      <router-link to="/history" class="app-favorites" aria-label="浏览历史">
+        <n-icon :component="TimeOutline" size="20" />
+        <span>历史</span>
+      </router-link>
+    </n-badge>
   </n-layout-header>
 </template>
 
 <script setup lang="ts">
 import { NLayoutHeader, NIcon, NText, NBadge } from 'naive-ui'
-import { ColorPaletteOutline, HeartOutline, ShuffleOutline, BarChartOutline } from '@vicons/ionicons5'
+import { ColorPaletteOutline, HeartOutline, ShuffleOutline, BarChartOutline, TimeOutline } from '@vicons/ionicons5'
 import { useRoute, useRouter } from 'vue-router'
 import { useFavorites } from '@/composables/useFavorites'
+import { useBrowseHistory } from '@/composables/useBrowseHistory'
 
 const route = useRoute()
 const router = useRouter()
 const { favoriteCount } = useFavorites()
+const { unreadCount } = useBrowseHistory()
 
 function handleTitleClick() {
   if (route.name === 'detail' && window.history.state?.fromList === true) {

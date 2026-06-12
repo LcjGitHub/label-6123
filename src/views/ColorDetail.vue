@@ -140,7 +140,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   NButton,
@@ -160,17 +160,29 @@ import { useColors } from '@/composables/useColors'
 import { findSimilarColors, formatRgb, formatHsl, rgbToHsl, isLightColor, type Hsl } from '@/utils/colorUtils'
 import { copyText } from '@/utils/copyUtils'
 import FavoriteButton from '@/components/FavoriteButton.vue'
+import { useBrowseHistory } from '@/composables/useBrowseHistory'
 
 const route = useRoute()
 const router = useRouter()
 const message = useMessage()
 const { getColorById, allColors } = useColors()
+const { addHistory } = useBrowseHistory()
 
 const colorId = computed(() => route.params.id as string)
 const color = computed(() => getColorById(colorId.value))
 const hasFromList = computed(() => window.history.state?.fromList === true)
 
 const similarCount = ref(5)
+
+watch(
+  colorId,
+  (id) => {
+    if (id) {
+      addHistory(id)
+    }
+  },
+  { immediate: true }
+)
 
 const isLight = computed(() =>
   color.value ? isLightColor(color.value.hex) : false

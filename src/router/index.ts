@@ -28,6 +28,11 @@ const router = createRouter({
       name: 'stats',
       component: () => import('@/views/StatsOverview.vue'),
     },
+    {
+      path: '/history',
+      name: 'history',
+      component: () => import('@/views/BrowseHistory.vue'),
+    },
   ],
 })
 
