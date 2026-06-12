@@ -40,20 +40,49 @@
         <span>历史</span>
       </router-link>
     </n-badge>
+    <n-tooltip :content="themeTooltip" placement="bottom">
+      <n-button
+        quaternary
+        circle
+        size="medium"
+        class="app-theme-toggle"
+        @click="toggleTheme"
+        :aria-label="themeTooltip"
+      >
+        <template #icon>
+          <n-icon :component="themeIcon" size="20" />
+        </template>
+      </n-button>
+    </n-tooltip>
   </n-layout-header>
 </template>
 
 <script setup lang="ts">
-import { NLayoutHeader, NIcon, NText, NBadge } from 'naive-ui'
-import { ColorPaletteOutline, HeartOutline, ShuffleOutline, BarChartOutline, TimeOutline, ContrastOutline } from '@vicons/ionicons5'
+import { computed } from 'vue'
+import { NLayoutHeader, NIcon, NText, NBadge, NButton, NTooltip } from 'naive-ui'
+import { ColorPaletteOutline, HeartOutline, ShuffleOutline, BarChartOutline, TimeOutline, ContrastOutline, MoonOutline, SunnyOutline, PhonePortraitOutline } from '@vicons/ionicons5'
 import { useRoute, useRouter } from 'vue-router'
 import { useFavorites } from '@/composables/useFavorites'
 import { useBrowseHistory } from '@/composables/useBrowseHistory'
+import { useTheme } from '@/composables/useTheme'
 
 const route = useRoute()
 const router = useRouter()
 const { favoriteCount } = useFavorites()
 const { unreadCount } = useBrowseHistory()
+const { themeMode, isDark, toggleTheme } = useTheme()
+
+const themeIcon = computed(() => {
+  if (themeMode.value === 'light') return SunnyOutline
+  if (themeMode.value === 'dark') return MoonOutline
+  return PhonePortraitOutline
+})
+
+const themeTooltip = computed(() => {
+  if (themeMode.value === 'light') return '浅色模式，点击切换到深色'
+  if (themeMode.value === 'dark') return '深色模式，点击切换到跟随系统'
+  return `跟随系统（${isDark.value ? '深色' : '浅色'}），点击切换到浅色`
+})
 
 function handleTitleClick() {
   if (route.name === 'detail' && window.history.state?.fromList === true) {
@@ -71,8 +100,9 @@ function handleTitleClick() {
   gap: 16px;
   padding: 0 24px;
   height: 56px;
-  background: #fff;
+  background: var(--bg-header);
   min-width: 0;
+  transition: background 0.3s;
 }
 
 .app-title {
@@ -81,13 +111,18 @@ function handleTitleClick() {
   gap: 8px;
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   text-decoration: none;
   flex-shrink: 0;
+  transition: color 0.2s;
 }
 
 .app-title:hover {
   color: #8B4513;
+}
+
+:deep(.theme-dark) .app-title:hover {
+  color: #D2691E;
 }
 
 .app-subtitle {
@@ -105,7 +140,7 @@ function handleTitleClick() {
   align-items: center;
   gap: 6px;
   font-size: 14px;
-  color: #333;
+  color: var(--text-primary);
   text-decoration: none;
   padding: 4px 8px;
   border-radius: 6px;
@@ -115,8 +150,12 @@ function handleTitleClick() {
 }
 
 .app-favorites:hover {
-  background: #f5f5f5;
+  background: var(--bg-hover);
   color: #8B4513;
+}
+
+:deep(.theme-dark) .app-favorites:hover {
+  color: #D2691E;
 }
 
 .app-nav-link {
@@ -124,7 +163,7 @@ function handleTitleClick() {
   align-items: center;
   gap: 6px;
   font-size: 14px;
-  color: #333;
+  color: var(--text-primary);
   text-decoration: none;
   padding: 4px 8px;
   border-radius: 6px;
@@ -135,8 +174,17 @@ function handleTitleClick() {
 }
 
 .app-nav-link:hover {
-  background: #f5f5f5;
+  background: var(--bg-hover);
   color: #8B4513;
+}
+
+:deep(.theme-dark) .app-nav-link:hover {
+  color: #D2691E;
+}
+
+.app-theme-toggle {
+  flex-shrink: 0;
+  margin-left: 4px;
 }
 
 @media (max-width: 640px) {

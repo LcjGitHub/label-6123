@@ -91,7 +91,7 @@ const categoryColors = computed(() => getCategoryRepresentativeColors(allColors.
 .stats-overview__title {
   font-size: 24px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -121,7 +121,7 @@ const categoryColors = computed(() => getCategoryRepresentativeColors(allColors.
 
 .stats-card__label {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 12px;
 }
 
@@ -134,19 +134,27 @@ const categoryColors = computed(() => getCategoryRepresentativeColors(allColors.
 
 .stats-card__desc {
   font-size: 13px;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .stats-card--total .stats-card__value {
-  color: #333;
+  color: var(--text-primary);
 }
 
 .stats-card--china .stats-card__value {
   color: #C91F37;
 }
 
+:deep(.theme-dark) .stats-card--china .stats-card__value {
+  color: #ff6b6b;
+}
+
 .stats-card--japan .stats-card__value {
   color: #2B66A4;
+}
+
+:deep(.theme-dark) .stats-card--japan .stats-card__value {
+  color: #74c0fc;
 }
 
 .stats-overview__section {
@@ -156,10 +164,14 @@ const categoryColors = computed(() => getCategoryRepresentativeColors(allColors.
 .stats-overview__section-title {
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 16px;
   padding-left: 12px;
   border-left: 4px solid #8B4513;
+}
+
+:deep(.theme-dark) .stats-overview__section-title {
+  border-left-color: #D2691E;
 }
 
 .stats-overview__grid {
@@ -192,16 +204,21 @@ const categoryColors = computed(() => getCategoryRepresentativeColors(allColors.
   box-shadow: 0 0 0 2px #fff;
 }
 
+:deep(.theme-dark) .category-card__color-dot {
+  border-color: #2a2a4a;
+  box-shadow: 0 0 0 2px #1a1a2e;
+}
+
 .category-card__name {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .category-card__total {
   font-size: 28px;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 12px;
 }
 
@@ -218,13 +235,13 @@ const categoryColors = computed(() => getCategoryRepresentativeColors(allColors.
 
 .category-card__detail-label {
   font-size: 12px;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .category-card__detail-value {
   font-size: 18px;
   font-weight: 600;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 640px) {

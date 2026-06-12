@@ -133,13 +133,13 @@ function handleCopy(hex: string) {
 .color-scheme__title {
   font-size: 20px;
   font-weight: 700;
-  color: #333;
+  color: var(--text-primary);
   margin: 0 0 4px 0;
 }
 
 .color-scheme__subtitle {
   font-size: 13px;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .color-scheme__base-swatch {
@@ -150,6 +150,10 @@ function handleCopy(hex: string) {
   flex-shrink: 0;
 }
 
+:deep(.theme-dark) .color-scheme__base-swatch {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
 .color-scheme__palette {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -157,16 +161,16 @@ function handleCopy(hex: string) {
 }
 
 .color-scheme__item {
-  background: #fafafa;
+  background: var(--bg-card);
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid #eee;
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
 }
 
 .color-scheme__item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .color-scheme__swatch {
@@ -184,7 +188,7 @@ function handleCopy(hex: string) {
 }
 
 .color-scheme__hex--light {
-  color: #333;
+  color: var(--text-primary);
   text-shadow: none;
 }
 
@@ -195,13 +199,13 @@ function handleCopy(hex: string) {
 .color-scheme__label {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 2px;
 }
 
 .color-scheme__name-placeholder {
   font-size: 13px;
-  color: #bbb;
+  color: var(--text-tertiary);
   margin-bottom: 10px;
   font-style: italic;
 }

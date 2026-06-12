@@ -2,7 +2,7 @@
   <div class="browse-history">
     <div class="browse-history__header">
       <n-space align="center" :size="12">
-        <n-icon :component="TimeOutline" size="24" color="#8B4513" />
+        <n-icon :component="TimeOutline" size="24" class="browse-history__icon" />
         <h2 class="browse-history__title">浏览历史</h2>
         <n-tag v-if="historyCount > 0" size="small" type="warning">
           {{ historyCount }} 条记录
@@ -105,10 +105,18 @@ function confirmClear() {
   margin-bottom: 24px;
 }
 
+.browse-history__icon {
+  color: #8B4513;
+}
+
+:deep(.theme-dark) .browse-history__icon {
+  color: #D2691E;
+}
+
 .browse-history__title {
   font-size: 20px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin: 0;
 }
 

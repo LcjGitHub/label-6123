@@ -79,15 +79,15 @@ const formattedTime = computed(() => {
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.2s;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s, background 0.3s;
   position: relative;
 }
 
 .history-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .history-card__swatch {
@@ -101,6 +101,10 @@ const formattedTime = computed(() => {
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
+:deep(.theme-dark) .history-card__swatch {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
 .history-card__hex {
   font-size: 10px;
   font-family: monospace;
@@ -109,7 +113,7 @@ const formattedTime = computed(() => {
 }
 
 .history-card__hex--light {
-  color: #333;
+  color: var(--text-primary);
   text-shadow: none;
 }
 
@@ -131,13 +135,17 @@ const formattedTime = computed(() => {
 .history-card__name {
   font-size: 15px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .history-card__name:hover {
   color: #8B4513;
+}
+
+:deep(.theme-dark) .history-card__name:hover {
+  color: #D2691E;
 }
 
 .history-card__meta {
@@ -147,12 +155,12 @@ const formattedTime = computed(() => {
 
 .history-card__time {
   font-size: 12px;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .history-card__delete {
   flex-shrink: 0;
-  color: #999;
+  color: var(--text-tertiary);
   transition: color 0.2s;
 }
 

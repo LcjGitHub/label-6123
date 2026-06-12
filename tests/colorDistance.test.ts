@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { rgbDistance, findSimilarColors, formatRgb } from '@/utils/colorDistance'
-import type { ColorItem, SimilarColorItem } from '@/types/color'
+import type { ColorItem } from '@/types/color'
 
 function makeColorItem(
   id: string,

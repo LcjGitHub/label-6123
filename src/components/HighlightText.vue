@@ -111,4 +111,9 @@ const parts = computed<TextPart[]>(() => {
   padding: 0 2px;
   font-weight: 600;
 }
+
+:deep(.theme-dark) .highlight-text__match {
+  background-color: rgba(255, 229, 143, 0.25);
+  color: #ffd666;
+}
 </style>

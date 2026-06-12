@@ -271,15 +271,16 @@ const darkBgSuggestion = computed(() => {
 }
 
 .compare-result__name--light {
-  color: #333;
+  color: var(--text-primary);
   text-shadow: none;
 }
 
 .compare-result__info {
-  background: #fff;
+  background: var(--bg-info-block);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-card);
+  transition: background 0.3s;
 }
 
 .compare-result__info-item {
@@ -287,7 +288,7 @@ const darkBgSuggestion = computed(() => {
   justify-content: space-between;
   align-items: center;
   padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .compare-result__info-item:last-child {
@@ -296,13 +297,13 @@ const darkBgSuggestion = computed(() => {
 
 .compare-result__info-label {
   font-size: 13px;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .compare-result__info-value {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   font-family: monospace;
 }
 
@@ -316,22 +317,23 @@ const darkBgSuggestion = computed(() => {
 }
 
 .compare-result__divider {
-  color: #ccc;
+  color: var(--divider-color);
   margin-bottom: 16px;
 }
 
 .compare-result__distance-card {
-  background: #fff;
+  background: var(--bg-info-block);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-card);
   width: 100%;
+  transition: background 0.3s;
 }
 
 .compare-result__distance-title {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 12px;
   text-align: center;
 }
@@ -341,7 +343,7 @@ const darkBgSuggestion = computed(() => {
   flex-direction: column;
   gap: 4px;
   padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .compare-result__distance-item:last-child {
@@ -350,13 +352,13 @@ const darkBgSuggestion = computed(() => {
 
 .compare-result__distance-label {
   font-size: 12px;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .compare-result__distance-value {
   font-size: 16px;
   font-weight: 600;
-  color: #8B4513;
+  color: var(--accent-primary);
   font-family: monospace;
 }
 
@@ -378,7 +380,7 @@ const darkBgSuggestion = computed(() => {
 .compare-result__tip-title {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 10px;
 }
 
@@ -392,7 +394,7 @@ const darkBgSuggestion = computed(() => {
   flex: 1;
   padding: 12px;
   border-radius: 6px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--border-color);
 }
 
 .compare-result__tip-text {
@@ -409,7 +411,7 @@ const darkBgSuggestion = computed(() => {
 
 .compare-result__tip-text-suggestion {
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 768px) {

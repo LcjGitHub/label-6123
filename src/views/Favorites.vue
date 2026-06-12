@@ -2,7 +2,7 @@
   <div class="favorites">
     <div class="favorites__header">
       <n-space align="center" :size="12">
-        <n-icon :component="Heart" size="24" color="#8B4513" />
+        <n-icon :component="Heart" size="24" class="favorites__icon" />
         <h2 class="favorites__title">我的收藏夹</h2>
         <n-tag v-if="favoriteCount > 0" size="small" type="warning">
           {{ favoriteCount }} 种颜色
@@ -101,10 +101,18 @@ function confirmClear() {
   margin-bottom: 24px;
 }
 
+.favorites__icon {
+  color: #8B4513;
+}
+
+:deep(.theme-dark) .favorites__icon {
+  color: #D2691E;
+}
+
 .favorites__title {
   font-size: 20px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin: 0;
 }
 

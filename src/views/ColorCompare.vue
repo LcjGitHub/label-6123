@@ -196,13 +196,13 @@ onMounted(() => {
 .color-compare__title {
   font-size: 28px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   margin: 0 0 8px 0;
 }
 
 .color-compare__subtitle {
   font-size: 14px;
-  color: #999;
+  color: var(--text-tertiary);
   margin: 0;
 }
 
@@ -227,33 +227,38 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-card);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .color-compare__selector:hover .color-compare__selector-preview {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .color-compare__selector-empty {
   height: 140px;
   border-radius: 12px;
-  border: 2px dashed #ddd;
+  border: 2px dashed var(--border-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: #999;
+  color: var(--text-tertiary);
   font-size: 14px;
   transition: border-color 0.2s, color 0.2s;
-  background: #fafafa;
+  background: var(--bg-card);
 }
 
 .color-compare__selector:hover .color-compare__selector-empty {
   border-color: #8B4513;
   color: #8B4513;
+}
+
+:deep(.theme-dark) .color-compare__selector:hover .color-compare__selector-empty {
+  border-color: #D2691E;
+  color: #D2691E;
 }
 
 .color-compare__selector-name {
@@ -264,7 +269,7 @@ onMounted(() => {
 }
 
 .color-compare__selector-name--light {
-  color: #333;
+  color: var(--text-primary);
   text-shadow: none;
 }
 

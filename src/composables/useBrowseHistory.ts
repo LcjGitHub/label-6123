@@ -75,7 +75,7 @@ watch(
 )
 
 export function useBrowseHistory() {
-  const { allColors, getColorById } = useColors()
+  const { getColorById } = useColors()
 
   const historyWithColors = computed<Array<{ item: BrowseHistoryItem; color: ColorItem }>>(() => {
     return historyList.value

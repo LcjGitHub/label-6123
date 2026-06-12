@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { rgbToHsl, hexToHsl, formatHsl, type Hsl } from '@/utils/colorHsl'
+import { rgbToHsl, hexToHsl, formatHsl } from '@/utils/colorHsl'
 
 describe('rgbToHsl', () => {
   it('纯红 rgb(255,0,0) 应为 hsl(0, 100%, 50%)', () => {

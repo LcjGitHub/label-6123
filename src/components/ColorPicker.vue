@@ -156,18 +156,18 @@ watch(
   overflow: hidden;
   cursor: pointer;
   border: 2px solid transparent;
-  transition: border-color 0.2s, transform 0.2s;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: border-color 0.2s, transform 0.2s, background 0.3s;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
 }
 
 .color-picker__item:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .color-picker__item--selected {
-  border-color: #8B4513;
+  border-color: var(--accent-primary);
 }
 
 .color-picker__preview {
@@ -190,7 +190,7 @@ watch(
 .color-picker__name {
   font-size: 13px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
@@ -200,6 +200,6 @@ watch(
 .color-picker__hex {
   font-size: 11px;
   font-family: monospace;
-  color: #999;
+  color: var(--text-tertiary);
 }
 </style>

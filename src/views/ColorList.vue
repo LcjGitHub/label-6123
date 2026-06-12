@@ -197,7 +197,7 @@ function resetFilters() {
 }
 
 .color-list__filters::-webkit-scrollbar-thumb {
-  background: #ddd;
+  background: var(--border-color);
   border-radius: 2px;
 }
 
@@ -211,7 +211,7 @@ function resetFilters() {
 .color-list__filter-label {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   white-space: nowrap;
 }
 

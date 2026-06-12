@@ -178,7 +178,7 @@ onMounted(() => {
 }
 
 .random-discover__title--light {
-  color: #333;
+  color: var(--text-primary);
   text-shadow: none;
 }
 
@@ -194,12 +194,12 @@ onMounted(() => {
 }
 
 .random-discover__title-link--light .random-discover__title-arrow {
-  color: #333;
+  color: var(--text-primary);
 }
 
 .random-discover__info-card {
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-card);
 }
 
 .random-discover__meta {

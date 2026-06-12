@@ -71,18 +71,18 @@ const originTagType = computed(() =>
 .color-card {
   display: block;
   position: relative;
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
   text-decoration: none;
   color: inherit;
 }
 
 .color-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .color-card__preview {
@@ -100,7 +100,7 @@ const originTagType = computed(() =>
 }
 
 .color-card__hex--light {
-  color: #333;
+  color: var(--text-primary);
   text-shadow: none;
 }
 
@@ -120,7 +120,7 @@ const originTagType = computed(() =>
 .color-card__name {
   font-size: 15px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -131,7 +131,7 @@ const originTagType = computed(() =>
 .color-card__story {
   font-size: 12px;
   line-height: 1.5;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 8px;
   display: -webkit-box;
   -webkit-line-clamp: 2;

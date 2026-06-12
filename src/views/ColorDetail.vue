@@ -306,7 +306,7 @@ function goToColorScheme() {
 }
 
 .color-detail__title--light {
-  color: #333;
+  color: var(--text-primary);
   text-shadow: none;
 }
 
@@ -335,7 +335,7 @@ function goToColorScheme() {
 
 .color-detail__similar-count-label {
   font-size: 13px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .color-detail__similar {
@@ -356,7 +356,7 @@ function goToColorScheme() {
 }
 
 .color-detail__similar-item:hover {
-  background: #f5f5f5;
+  background: var(--bg-hover);
 }
 
 .color-detail__similar-swatch {
@@ -365,6 +365,10 @@ function goToColorScheme() {
   border-radius: 6px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   flex-shrink: 0;
+}
+
+:deep(.theme-dark) .color-detail__similar-swatch {
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .color-detail__similar-info {
@@ -384,12 +388,13 @@ function goToColorScheme() {
 .color-detail__similar-name {
   font-weight: 600;
   font-size: 14px;
+  color: var(--text-primary);
 }
 
 .color-detail__similar-hex {
   font-size: 12px;
   font-family: monospace;
-  color: #999;
+  color: var(--text-tertiary);
 }
 
 .color-detail__similar-distances {
@@ -407,9 +412,19 @@ function goToColorScheme() {
   color: #666;
 }
 
+:deep(.theme-dark) .color-detail__distance {
+  background: #2a2a4a;
+  color: #a0a0b0;
+}
+
 .color-detail__distance--r {
   background: #fef0f0;
   color: #e74c3c;
+}
+
+:deep(.theme-dark) .color-detail__distance--r {
+  background: rgba(231, 76, 60, 0.15);
+  color: #ff6b6b;
 }
 
 .color-detail__distance--g {
@@ -417,9 +432,19 @@ function goToColorScheme() {
   color: #27ae60;
 }
 
+:deep(.theme-dark) .color-detail__distance--g {
+  background: rgba(39, 174, 96, 0.15);
+  color: #51cf66;
+}
+
 .color-detail__distance--b {
   background: #f0f4fe;
   color: #3498db;
+}
+
+:deep(.theme-dark) .color-detail__distance--b {
+  background: rgba(52, 152, 219, 0.15);
+  color: #74c0fc;
 }
 
 .color-detail__not-found {
@@ -435,7 +460,7 @@ function goToColorScheme() {
 
 .color-detail__scheme-desc {
   font-size: 13px;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 </style>

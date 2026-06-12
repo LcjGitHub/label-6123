@@ -2,8 +2,6 @@ import { describe, it, expect } from 'vitest'
 import {
   computeColorStats,
   getCategoryRepresentativeColors,
-  type ColorStats,
-  type CategoryStats,
 } from '@/utils/statsUtils'
 import type { ColorItem } from '@/types/color'
 import { COLOR_CATEGORIES } from '@/types/color'
