@@ -63,7 +63,7 @@ export type ColorCategory = (typeof COLOR_CATEGORIES)[number]
 export const SORT_OPTIONS = [
   { label: '按色名顺序', value: 'name' },
   { label: '按色系分组', value: 'category' },
-  { label: '按亮度从高到低', value: 'brightness' },
+  { label: '按十六进制色值亮度从高到低', value: 'brightness' },
 ] as const
 
 export type SortOption = (typeof SORT_OPTIONS)[number]['value']

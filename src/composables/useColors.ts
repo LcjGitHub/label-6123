@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import Fuse from 'fuse.js'
 import colorsData from '@/mock/colors.json'
 import type { ColorItem, ColorOrigin, SortOption } from '@/types/color'
+import { COLOR_CATEGORIES } from '@/types/color'
 import { getLuminance } from '@/utils/colorUtils'
 
 const allColors = ref<ColorItem[]>(colorsData as ColorItem[])
@@ -57,13 +58,18 @@ export function useColors() {
     switch (sortBy) {
       case 'name':
         return sorted.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
-      case 'category':
+      case 'category': {
+        const categoryIndex = new Map<string, number>()
+        COLOR_CATEGORIES.forEach((cat, idx) => categoryIndex.set(cat, idx))
         return sorted.sort((a, b) => {
           if (a.category === b.category) {
             return a.name.localeCompare(b.name, 'zh-CN')
           }
-          return a.category.localeCompare(b.category, 'zh-CN')
+          const idxA = categoryIndex.get(a.category) ?? COLOR_CATEGORIES.length
+          const idxB = categoryIndex.get(b.category) ?? COLOR_CATEGORIES.length
+          return idxA - idxB
         })
+      }
       case 'brightness':
         return sorted.sort((a, b) => getLuminance(b.hex) - getLuminance(a.hex))
       default:

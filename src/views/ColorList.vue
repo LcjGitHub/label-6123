@@ -78,13 +78,12 @@ const filteredColors = computed(() => {
 })
 
 /**
- * 重置搜索与筛选
+ * 重置搜索与筛选（保留排序方式）
  */
 function resetFilters() {
   keyword.value = ''
   category.value = '全部'
   origin.value = 'all'
-  sortBy.value = 'name'
 }
 </script>
 
