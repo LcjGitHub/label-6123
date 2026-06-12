@@ -20,7 +20,12 @@
         class="color-card__favorite"
         :color-id="color.id"
       />
-      <div class="color-card__name">{{ color.name }}</div>
+      <div class="color-card__name">
+        <HighlightText :text="color.name" :keyword="searchKeyword" />
+      </div>
+      <div v-if="searchKeyword.trim()" class="color-card__story">
+        <HighlightText :text="color.story" :keyword="searchKeyword" />
+      </div>
       <div class="color-card__tags">
         <n-tag size="small" :bordered="false" type="default">
           {{ color.category }}
@@ -39,10 +44,17 @@ import { NTag } from 'naive-ui'
 import type { ColorItem } from '@/types/color'
 import { isLightColor } from '@/utils/colorUtils'
 import FavoriteButton from './FavoriteButton.vue'
+import HighlightText from './HighlightText.vue'
 
-const props = defineProps<{
-  color: ColorItem
-}>()
+const props = withDefaults(
+  defineProps<{
+    color: ColorItem
+    searchKeyword?: string
+  }>(),
+  {
+    searchKeyword: '',
+  }
+)
 
 const isLight = computed(() => isLightColor(props.color.hex))
 
@@ -114,6 +126,18 @@ const originTagType = computed(() =>
   white-space: nowrap;
   padding-right: 8px;
   margin-bottom: 6px;
+}
+
+.color-card__story {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #666;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
 }
 
 .color-card__tags {

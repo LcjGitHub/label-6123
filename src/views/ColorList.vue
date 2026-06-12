@@ -20,6 +20,7 @@
           v-for="color in filteredColors"
           :key="color.id"
           :color="color"
+          :search-keyword="keyword"
         />
       </div>
       <n-empty
