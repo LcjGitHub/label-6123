@@ -77,6 +77,23 @@
 
     <n-card class="color-detail__card">
       <template #header>
+        <div class="color-detail__scheme-header">
+          <span>配色方案</span>
+          <n-button type="primary" size="small" @click="goToColorScheme">
+            <template #icon>
+              <n-icon :component="ColorPaletteOutline" />
+            </template>
+            生成配色方案
+          </n-button>
+        </div>
+      </template>
+      <n-text class="color-detail__scheme-desc">
+        根据当前颜色的红绿蓝值，自动计算互补色、类似色和三等分配色等衍生配色
+      </n-text>
+    </n-card>
+
+    <n-card class="color-detail__card">
+      <template #header>
         <div class="color-detail__similar-header">
           <span>相近色（红绿蓝距离前 {{ similarCount }} 个）</span>
           <div class="color-detail__similar-count-control">
@@ -155,7 +172,7 @@ import {
   NInputNumber,
   useMessage,
 } from 'naive-ui'
-import { ArrowBackOutline, AlertCircleOutline, CopyOutline } from '@vicons/ionicons5'
+import { ArrowBackOutline, AlertCircleOutline, CopyOutline, ColorPaletteOutline } from '@vicons/ionicons5'
 import { useColors } from '@/composables/useColors'
 import { findSimilarColors, formatRgb, formatHsl, rgbToHsl, isLightColor, type Hsl } from '@/utils/colorUtils'
 import { copyText } from '@/utils/copyUtils'
@@ -243,6 +260,19 @@ function handleCopyHsl() {
   if (color.value) {
     copyText(formatHsl(colorHsl.value), '色相饱和度亮度值', message)
   }
+}
+
+/**
+ * 跳转到配色方案页面
+ *
+ * 携带当前颜色ID作为路由参数，通过 state 标记来源为详情页，
+ * 以便配色方案页面的返回按钮能正确回到当前详情页。
+ */
+function goToColorScheme() {
+  router.push({
+    path: `/color/${colorId.value}/scheme`,
+    state: { fromDetail: true },
+  })
 }
 </script>
 
@@ -394,5 +424,18 @@ function handleCopyHsl() {
 
 .color-detail__not-found {
   padding: 80px 0;
+}
+
+.color-detail__scheme-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.color-detail__scheme-desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
 }
 </style>

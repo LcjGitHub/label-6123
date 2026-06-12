@@ -24,6 +24,11 @@ const router = createRouter({
       component: () => import('@/views/ColorDetail.vue'),
     },
     {
+      path: '/color/:id/scheme',
+      name: 'colorScheme',
+      component: () => import('@/views/ColorScheme.vue'),
+    },
+    {
       path: '/stats',
       name: 'stats',
       component: () => import('@/views/StatsOverview.vue'),
