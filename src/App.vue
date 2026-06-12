@@ -13,6 +13,10 @@
             <n-icon :component="ShuffleOutline" size="20" />
             <span>随机发现</span>
           </router-link>
+          <router-link to="/stats" class="app-nav-link" aria-label="统计概览">
+            <n-icon :component="BarChartOutline" size="20" />
+            <span>统计概览</span>
+          </router-link>
           <n-badge
             class="app-favorites-badge"
             :value="favoriteCount"
@@ -35,7 +39,7 @@
 
 <script setup lang="ts">
 import { NConfigProvider, NMessageProvider, NLayout, NLayoutHeader, NLayoutContent, NIcon, NText, NBadge } from 'naive-ui'
-import { ColorPaletteOutline, HeartOutline, ShuffleOutline } from '@vicons/ionicons5'
+import { ColorPaletteOutline, HeartOutline, ShuffleOutline, BarChartOutline } from '@vicons/ionicons5'
 import { useFavorites } from '@/composables/useFavorites'
 
 const { favoriteCount } = useFavorites()

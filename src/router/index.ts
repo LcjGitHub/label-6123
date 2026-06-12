@@ -23,6 +23,11 @@ const router = createRouter({
       name: 'detail',
       component: () => import('@/views/ColorDetail.vue'),
     },
+    {
+      path: '/stats',
+      name: 'stats',
+      component: () => import('@/views/StatsOverview.vue'),
+    },
   ],
 })
 
