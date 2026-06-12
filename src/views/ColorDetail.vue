@@ -51,9 +51,23 @@
             </n-button>
           </div>
         </n-descriptions-item>
+        <n-descriptions-item label="HSV">
+          <div class="color-detail__copy-item">
+            <n-text code>{{ formatHsv(colorHsv) }}</n-text>
+            <n-button size="small" text @click="handleCopyHsv">
+              <template #icon>
+                <n-icon :component="CopyOutline" />
+              </template>
+              复制
+            </n-button>
+          </div>
+        </n-descriptions-item>
         <n-descriptions-item label="R">{{ color.rgb.r }}</n-descriptions-item>
         <n-descriptions-item label="G">{{ color.rgb.g }}</n-descriptions-item>
         <n-descriptions-item label="B">{{ color.rgb.b }}</n-descriptions-item>
+        <n-descriptions-item label="H">{{ colorHsv.h }}°</n-descriptions-item>
+        <n-descriptions-item label="S">{{ colorHsv.s }}%</n-descriptions-item>
+        <n-descriptions-item label="V">{{ colorHsv.v }}%</n-descriptions-item>
       </n-descriptions>
     </n-card>
 
@@ -143,7 +157,7 @@ import {
 } from 'naive-ui'
 import { ArrowBackOutline, AlertCircleOutline, CopyOutline } from '@vicons/ionicons5'
 import { useColors } from '@/composables/useColors'
-import { findSimilarColors, formatRgb, isLightColor } from '@/utils/colorUtils'
+import { findSimilarColors, formatRgb, formatHsv, rgbToHsv, isLightColor, type Hsv } from '@/utils/colorUtils'
 import { copyText } from '@/utils/copyUtils'
 import FavoriteButton from '@/components/FavoriteButton.vue'
 
@@ -159,6 +173,10 @@ const similarCount = ref(5)
 
 const isLight = computed(() =>
   color.value ? isLightColor(color.value.hex) : false
+)
+
+const colorHsv = computed<Hsv>(() =>
+  color.value ? rgbToHsv(color.value.rgb) : { h: 0, s: 0, v: 0 }
 )
 
 const similarColors = computed(() => {
@@ -194,6 +212,18 @@ function handleCopyHex() {
 function handleCopyRgb() {
   if (color.value) {
     copyText(formatRgb(color.value.rgb), '红绿蓝色值', message)
+  }
+}
+
+/**
+ * 复制色相饱和度亮度值到剪贴板
+ *
+ * 将当前颜色的 HSV 色值（如 hsv(0, 100%, 100%)）写入剪贴板，
+ * 成功后弹出「色相饱和度亮度值已复制到剪贴板」提示。
+ */
+function handleCopyHsv() {
+  if (color.value) {
+    copyText(formatHsv(colorHsv.value), '色相饱和度亮度值', message)
   }
 }
 </script>

@@ -66,3 +66,77 @@ export function getLuminance(hex: string): number {
 export function isLightColor(hex: string): boolean {
   return getLuminance(hex) > 0.6
 }
+
+/**
+ * HSV 色值类型
+ */
+export interface Hsv {
+  /** 色相 (0-360) */
+  h: number
+  /** 饱和度 (0-100) */
+  s: number
+  /** 亮度 (0-100) */
+  v: number
+}
+
+/**
+ * 将 RGB 转换为 HSV
+ * @param rgb RGB 色值对象，r、g、b 范围 0-255
+ * @returns HSV 色值对象，h 范围 0-360，s 和 v 范围 0-100
+ */
+export function rgbToHsv(rgb: { r: number; g: number; b: number }): Hsv {
+  const r = rgb.r / 255
+  const g = rgb.g / 255
+  const b = rgb.b / 255
+
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const delta = max - min
+
+  let h = 0
+  let s = 0
+  const v = Math.round(max * 100)
+
+  if (delta !== 0) {
+    s = Math.round((delta / max) * 100)
+
+    switch (max) {
+      case r:
+        h = ((g - b) / delta) % 6
+        break
+      case g:
+        h = (b - r) / delta + 2
+        break
+      case b:
+        h = (r - g) / delta + 4
+        break
+    }
+
+    h = Math.round(h * 60)
+    if (h < 0) {
+      h += 360
+    }
+  }
+
+  return { h, s, v }
+}
+
+/**
+ * 将十六进制色值转换为 HSV
+ * @param hex 十六进制色值，如 #FF0000
+ * @returns HSV 色值对象
+ */
+export function hexToHsv(hex: string): Hsv {
+  const h = hex.replace('#', '')
+  const r = parseInt(h.substring(0, 2), 16)
+  const g = parseInt(h.substring(2, 4), 16)
+  const b = parseInt(h.substring(4, 6), 16)
+  return rgbToHsv({ r, g, b })
+}
+
+/**
+ * 将 HSV 格式化为字符串
+ */
+export function formatHsv(hsv: Hsv): string {
+  return `hsv(${hsv.h}, ${hsv.s}%, ${hsv.v}%)`
+}
