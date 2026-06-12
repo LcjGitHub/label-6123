@@ -50,7 +50,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { NSpin, NEmpty, NIcon, NButton, NText } from 'naive-ui'
 import { ColorPaletteOutline } from '@vicons/ionicons5'
 import ColorCard from '@/components/ColorCard.vue'
@@ -62,11 +63,78 @@ import { useColors } from '@/composables/useColors'
 import type { ColorOrigin, SortOption } from '@/types/color'
 
 const { searchColors, filterByCategory, filterByOrigin, sortColors } = useColors()
+const route = useRoute()
+const router = useRouter()
 
-const keyword = ref('')
-const category = ref('全部')
-const origin = ref<ColorOrigin>('all')
-const sortBy = ref<SortOption>('name')
+const DEFAULT_KEYWORD = ''
+const DEFAULT_CATEGORY = '全部'
+const DEFAULT_ORIGIN: ColorOrigin = 'all'
+const DEFAULT_SORT_BY: SortOption = 'name'
+
+const keyword = ref(DEFAULT_KEYWORD)
+const category = ref(DEFAULT_CATEGORY)
+const origin = ref<ColorOrigin>(DEFAULT_ORIGIN)
+const sortBy = ref<SortOption>(DEFAULT_SORT_BY)
+
+let isSyncingFromQuery = false
+
+function restoreFromQuery() {
+  isSyncingFromQuery = true
+  try {
+    const q = route.query
+    keyword.value = typeof q.keyword === 'string' ? q.keyword : DEFAULT_KEYWORD
+    category.value = typeof q.category === 'string' && q.category ? q.category : DEFAULT_CATEGORY
+    if (typeof q.origin === 'string' && (q.origin === 'all' || q.origin === 'china' || q.origin === 'japan')) {
+      origin.value = q.origin as ColorOrigin
+    } else {
+      origin.value = DEFAULT_ORIGIN
+    }
+    if (typeof q.sortBy === 'string' && (q.sortBy === 'name' || q.sortBy === 'category' || q.sortBy === 'brightness')) {
+      sortBy.value = q.sortBy as SortOption
+    } else {
+      sortBy.value = DEFAULT_SORT_BY
+    }
+  } finally {
+    isSyncingFromQuery = false
+  }
+}
+
+function syncToQuery() {
+  if (isSyncingFromQuery) return
+  const query: Record<string, string> = {}
+  if (keyword.value !== DEFAULT_KEYWORD) {
+    query.keyword = keyword.value
+  }
+  if (category.value !== DEFAULT_CATEGORY) {
+    query.category = category.value
+  }
+  if (origin.value !== DEFAULT_ORIGIN) {
+    query.origin = origin.value
+  }
+  if (sortBy.value !== DEFAULT_SORT_BY) {
+    query.sortBy = sortBy.value
+  }
+  router.replace({
+    path: route.path,
+    query: Object.keys(query).length > 0 ? query : undefined,
+  })
+}
+
+restoreFromQuery()
+
+watch(
+  () => [keyword.value, category.value, origin.value, sortBy.value],
+  () => {
+    syncToQuery()
+  }
+)
+
+watch(
+  () => route.fullPath,
+  () => {
+    restoreFromQuery()
+  }
+)
 
 const trimmedKeyword = computed(() => keyword.value.trim())
 
@@ -81,9 +149,9 @@ const filteredColors = computed(() => {
  * 重置搜索与筛选（保留排序方式）
  */
 function resetFilters() {
-  keyword.value = ''
-  category.value = '全部'
-  origin.value = 'all'
+  keyword.value = DEFAULT_KEYWORD
+  category.value = DEFAULT_CATEGORY
+  origin.value = DEFAULT_ORIGIN
 }
 </script>
 
