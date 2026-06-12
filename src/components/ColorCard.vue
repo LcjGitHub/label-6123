@@ -21,10 +21,10 @@
         :color-id="color.id"
       />
       <div class="color-card__name">
-        <HighlightText :text="color.name" :keyword="searchKeyword" />
+        <HighlightText :text="color.name" :keyword="searchKeyword" match-mode="prefix" />
       </div>
       <div v-if="searchKeyword.trim()" class="color-card__story">
-        <HighlightText :text="color.story" :keyword="searchKeyword" />
+        <HighlightText :text="color.story" :keyword="searchKeyword" match-mode="full" />
       </div>
       <div class="color-card__tags">
         <n-tag size="small" :bordered="false" type="default">

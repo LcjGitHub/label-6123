@@ -20,7 +20,7 @@
           v-for="color in filteredColors"
           :key="color.id"
           :color="color"
-          :search-keyword="keyword"
+          :search-keyword="trimmedKeyword"
         />
       </div>
       <n-empty
@@ -60,8 +60,10 @@ const keyword = ref('')
 const category = ref('全部')
 const origin = ref<ColorOrigin>('all')
 
+const trimmedKeyword = computed(() => keyword.value.trim())
+
 const filteredColors = computed(() => {
-  const searched = searchColors(keyword.value)
+  const searched = searchColors(trimmedKeyword.value)
   const byCategory = filterByCategory(searched, category.value)
   return filterByOrigin(byCategory, origin.value)
 })
