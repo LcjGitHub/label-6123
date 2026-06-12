@@ -1,7 +1,8 @@
 import { ref, computed } from 'vue'
 import Fuse from 'fuse.js'
 import colorsData from '@/mock/colors.json'
-import type { ColorItem, ColorOrigin } from '@/types/color'
+import type { ColorItem, ColorOrigin, SortOption } from '@/types/color'
+import { getLuminance } from '@/utils/colorUtils'
 
 const allColors = ref<ColorItem[]>(colorsData as ColorItem[])
 
@@ -45,11 +46,37 @@ export function useColors() {
     return colors.filter((c) => c.origin === origin)
   }
 
+  /**
+   * 排序颜色
+   * - name: 按色名字典序
+   * - category: 按色系分组，组内按色名
+   * - brightness: 按亮度从高到低
+   */
+  function sortColors(colors: ColorItem[], sortBy: SortOption): ColorItem[] {
+    const sorted = [...colors]
+    switch (sortBy) {
+      case 'name':
+        return sorted.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN'))
+      case 'category':
+        return sorted.sort((a, b) => {
+          if (a.category === b.category) {
+            return a.name.localeCompare(b.name, 'zh-CN')
+          }
+          return a.category.localeCompare(b.category, 'zh-CN')
+        })
+      case 'brightness':
+        return sorted.sort((a, b) => getLuminance(b.hex) - getLuminance(a.hex))
+      default:
+        return sorted
+    }
+  }
+
   return {
     allColors: computed(() => allColors.value),
     getColorById,
     searchColors,
     filterByCategory,
     filterByOrigin,
+    sortColors,
   }
 }

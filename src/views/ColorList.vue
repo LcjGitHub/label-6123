@@ -1,7 +1,13 @@
 <template>
   <div class="color-list">
     <div class="color-list__toolbar">
-      <ColorSearch v-model="keyword" />
+      <div class="color-list__toolbar-top">
+        <ColorSearch v-model="keyword" class="color-list__search" />
+        <div class="color-list__filter-group">
+          <span class="color-list__filter-label">排序</span>
+          <SortSelector v-model="sortBy" />
+        </div>
+      </div>
       <div class="color-list__filters">
         <div class="color-list__filter-group">
           <span class="color-list__filter-label">色系</span>
@@ -51,21 +57,24 @@ import ColorCard from '@/components/ColorCard.vue'
 import ColorSearch from '@/components/ColorSearch.vue'
 import CategoryFilter from '@/components/CategoryFilter.vue'
 import SourceFilter from '@/components/SourceFilter.vue'
+import SortSelector from '@/components/SortSelector.vue'
 import { useColors } from '@/composables/useColors'
-import type { ColorOrigin } from '@/types/color'
+import type { ColorOrigin, SortOption } from '@/types/color'
 
-const { searchColors, filterByCategory, filterByOrigin } = useColors()
+const { searchColors, filterByCategory, filterByOrigin, sortColors } = useColors()
 
 const keyword = ref('')
 const category = ref('全部')
 const origin = ref<ColorOrigin>('all')
+const sortBy = ref<SortOption>('name')
 
 const trimmedKeyword = computed(() => keyword.value.trim())
 
 const filteredColors = computed(() => {
   const searched = searchColors(trimmedKeyword.value)
   const byCategory = filterByCategory(searched, category.value)
-  return filterByOrigin(byCategory, origin.value)
+  const byOrigin = filterByOrigin(byCategory, origin.value)
+  return sortColors(byOrigin, sortBy.value)
 })
 
 /**
@@ -75,12 +84,26 @@ function resetFilters() {
   keyword.value = ''
   category.value = '全部'
   origin.value = 'all'
+  sortBy.value = 'name'
 }
 </script>
 
 <style scoped>
 .color-list__toolbar {
   margin-bottom: 24px;
+}
+
+.color-list__toolbar-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.color-list__search {
+  flex: 1;
+  min-width: 240px;
 }
 
 .color-list__filters {

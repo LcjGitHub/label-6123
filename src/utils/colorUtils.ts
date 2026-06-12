@@ -50,13 +50,19 @@ export function formatRgb(rgb: { r: number; g: number; b: number }): string {
 }
 
 /**
- * 判断文字在深色背景上是否应使用浅色
+ * 计算颜色相对亮度 (0-1)
  */
-export function isLightColor(hex: string): boolean {
+export function getLuminance(hex: string): number {
   const h = hex.replace('#', '')
   const r = parseInt(h.substring(0, 2), 16)
   const g = parseInt(h.substring(2, 4), 16)
   const b = parseInt(h.substring(4, 6), 16)
-  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
-  return luminance > 0.6
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255
+}
+
+/**
+ * 判断文字在深色背景上是否应使用浅色
+ */
+export function isLightColor(hex: string): boolean {
+  return getLuminance(hex) > 0.6
 }
