@@ -1,23 +1,26 @@
 <template>
-  <div class="color-card">
-    <router-link :to="`/color/${color.id}`" class="color-card__link">
-      <div
-        class="color-card__preview"
-        :style="{ backgroundColor: color.hex }"
+  <router-link
+    :to="`/color/${color.id}`"
+    class="color-card"
+    aria-label="查看颜色详情"
+  >
+    <div
+      class="color-card__preview"
+      :style="{ backgroundColor: color.hex }"
+    >
+      <span
+        class="color-card__hex"
+        :class="{ 'color-card__hex--light': isLight }"
       >
-        <span
-          class="color-card__hex"
-          :class="{ 'color-card__hex--light': isLight }"
-        >
-          {{ color.hex }}
-        </span>
-      </div>
-    </router-link>
+        {{ color.hex }}
+      </span>
+    </div>
     <div class="color-card__info">
-      <router-link :to="`/color/${color.id}`" class="color-card__name-link">
-        <div class="color-card__name">{{ color.name }}</div>
-      </router-link>
-      <FavoriteButton :color-id="color.id" />
+      <FavoriteButton
+        class="color-card__favorite"
+        :color-id="color.id"
+      />
+      <div class="color-card__name">{{ color.name }}</div>
       <div class="color-card__tags">
         <n-tag size="small" :bordered="false" type="default">
           {{ color.category }}
@@ -27,7 +30,7 @@
         </n-tag>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script setup lang="ts">
@@ -54,24 +57,20 @@ const originTagType = computed(() =>
 
 <style scoped>
 .color-card {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  position: relative;
   background: #fff;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
 }
 
 .color-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.color-card__link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
 }
 
 .color-card__preview {
@@ -94,18 +93,16 @@ const originTagType = computed(() =>
 }
 
 .color-card__info {
+  position: relative;
   padding: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
+  padding-right: 40px;
 }
 
-.color-card__name-link {
-  flex: 1;
-  min-width: 0;
-  text-decoration: none;
-  color: inherit;
+.color-card__favorite {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1;
 }
 
 .color-card__name {
@@ -115,11 +112,13 @@ const originTagType = computed(() =>
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding-right: 8px;
+  margin-bottom: 6px;
 }
 
 .color-card__tags {
   display: flex;
   gap: 6px;
-  width: 100%;
+  flex-wrap: wrap;
 }
 </style>

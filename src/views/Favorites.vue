@@ -42,11 +42,33 @@
         </template>
       </n-empty>
     </n-spin>
+
+    <n-modal
+      v-model:show="showClearDialog"
+      preset="dialog"
+      title="清空收藏夹"
+      positive-text="确定清空"
+      negative-text="取消"
+      :positive-button-props="{ type: 'error' }"
+      @positive-click="confirmClear"
+    >
+      <n-text>确定要清空收藏夹吗？此操作不可恢复。</n-text>
+    </n-modal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { NIcon, NSpace, NTag, NButton, NSpin, NEmpty } from 'naive-ui'
+import { ref } from 'vue'
+import {
+  NIcon,
+  NSpace,
+  NTag,
+  NButton,
+  NSpin,
+  NEmpty,
+  NModal,
+  NText,
+} from 'naive-ui'
 import { Heart, HeartOutline, TrashOutline } from '@vicons/ionicons5'
 import { useRouter } from 'vue-router'
 import { useFavorites } from '@/composables/useFavorites'
@@ -55,14 +77,19 @@ import ColorCard from '@/components/ColorCard.vue'
 const router = useRouter()
 const { favoriteColors, favoriteCount, clearFavorites } = useFavorites()
 
+const showClearDialog = ref(false)
+
 function goToList() {
   router.push('/')
 }
 
 function handleClear() {
-  if (window.confirm('确定要清空收藏夹吗？')) {
-    clearFavorites()
-  }
+  showClearDialog.value = true
+}
+
+function confirmClear() {
+  clearFavorites()
+  showClearDialog.value = false
 }
 </script>
 

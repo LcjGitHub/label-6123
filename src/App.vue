@@ -9,12 +9,17 @@
           </router-link>
           <n-text depth="3" class="app-subtitle">中国色 · 日本色</n-text>
           <div class="app-header__spacer" />
-          <router-link to="/favorites" class="app-favorites">
-            <n-badge :value="favoriteCount" :max="99" :hidden="favoriteCount === 0">
+          <n-badge
+            class="app-favorites-badge"
+            :value="favoriteCount"
+            :max="99"
+            :hidden="favoriteCount === 0"
+          >
+            <router-link to="/favorites" class="app-favorites" aria-label="我的收藏夹">
               <n-icon :component="HeartOutline" size="20" />
-            </n-badge>
-            <span>收藏夹</span>
-          </router-link>
+              <span>收藏夹</span>
+            </router-link>
+          </n-badge>
         </n-layout-header>
         <n-layout-content class="app-content">
           <router-view />

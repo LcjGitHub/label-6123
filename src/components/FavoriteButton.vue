@@ -2,12 +2,18 @@
   <n-button
     class="favorite-btn"
     :type="isFavorited ? 'warning' : 'default'"
-    :quaternary="!isFavorited"
+    text
     size="small"
+    :aria-label="isFavorited ? '取消收藏' : '收藏'"
+    :title="isFavorited ? '取消收藏' : '收藏'"
     @click.stop="handleToggle"
   >
     <template #icon>
-      <n-icon :component="isFavorited ? Heart : HeartOutline" :size="size" />
+      <n-icon
+        :component="isFavorited ? Heart : HeartOutline"
+        :size="size"
+        :color="isFavorited ? '#f0a020' : undefined"
+      />
     </template>
   </n-button>
 </template>
